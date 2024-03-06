@@ -1,5 +1,4 @@
 import React,{createContext ,useReducer} from "react";
-// import Appreducer from "./Appreducer";
 import Appreducer from "./Appreducer";
 
 const initailstate={
@@ -16,8 +15,24 @@ export const Globalcontext =createContext(initailstate);
 export const GlobalProvider = ({children}) =>{
     const [state, dispatch] = useReducer(Appreducer , initailstate);
 
+    function deleteTransaction(id){
+        dispatch({
+            type : 'DELETE_TRANSACTION',
+            payload : id
+        });
+    }
+
+    function addTransaction(transaction){
+        dispatch({
+            type : 'ADD_TRANSACTION',
+            payload : transaction
+        });
+    }
+
     return (<Globalcontext.Provider value={{
-        transactions:state.transactions
+        transactions:state.transactions,
+        deleteTransaction, 
+        addTransaction
     }}>
         {children}
     </Globalcontext.Provider>);
